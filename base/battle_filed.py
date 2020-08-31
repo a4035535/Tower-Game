@@ -12,3 +12,4 @@ class battle_filed:
         # 注：这里最好只检查面前，以减少计算量并且避免BUG
         # 方向可以通过 unit.flag 判断
         pass
+        return None

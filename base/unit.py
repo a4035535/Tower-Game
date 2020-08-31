@@ -3,7 +3,7 @@ class unit:
         self.HP = HP
         self.ATK = ATK
         # pos: (x,y) 如果不使用网格模式，直接使用图片坐标(pygame中精灵位置)
-        # 否则使用 (n,m) n：第几条路  m
+        # 否则使用 (n,m) n：第几条路  m:第几个格子
         self.pos = pos
         self.attack_interval = attack_interval
         self.now_interval = 0
