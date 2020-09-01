@@ -23,6 +23,7 @@ class unit:
         pass
 
     def attack(self, enemy):
+		# 每10帧进行一次攻击
         if self.now_interval == self.attack_interval:
             enemy.HP -= self.ATK
             self.now_interval = 0
