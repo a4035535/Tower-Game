@@ -10,6 +10,13 @@ class battle_filed:
             enemy = self.check_collision(i)
             i.action(enemy)
 
+        dead_list = []
+        for i in self.unit_list:
+            if i.HP <= 0:
+                dead_list.append(i)
+        while len(dead_list) != 0:
+            del dead_list[0]
+
     def check_collision(self, unit):
         # 返回相遇对象，否则返回None
         # 注：这里最好只检查面前，以减少计算量并且避免BUG
