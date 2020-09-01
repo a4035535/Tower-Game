@@ -11,7 +11,7 @@ class unit:
         self.now_interval = 0
         # 单位阵营
         self.flag = flag
-        # status: move_1 move_2 att_1 att2
+        # status: move_1 move_2 att_1 att_2
         self.status = 'move_1'
 
 
