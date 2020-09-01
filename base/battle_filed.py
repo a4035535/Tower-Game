@@ -20,7 +20,7 @@ class battle_filed:
             if a < b:
                 return a < c < b
             else:
-                return b < a < c
+                return b < c < a
 
         for i in self.unit_list:
             if i is not unit and i.pos[0] == pos[0] \
