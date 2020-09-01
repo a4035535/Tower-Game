@@ -1,3 +1,5 @@
+
+
 class unit:
     def __init__(self, HP, ATK, pos, attack_interval=10, flag='left'):
         self.HP = HP
@@ -9,6 +11,10 @@ class unit:
         self.now_interval = 0
         # 单位阵营
         self.flag = flag
+        # status: move_1 move_2 att_1 att2
+        self.status = 'move_1'
+
+
 
     def action(self, collision_statue):
         # 调整状态 -> 执行动作
