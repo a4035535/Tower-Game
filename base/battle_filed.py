@@ -59,13 +59,14 @@ class battle_filed:
             # 判定碰撞
             if i is not unit and i.pos[1] == pos[1] \
                     and is_in_range(pos[0], pos[0] + rag, i.pos[0]):
-                return i
-
-                base_flag = 'left' if 'right' == unit.flag else 'right'
-                # 与基地发生碰撞
-                if self.base[base_flag].pos[1] == pos[1] \
-                        and is_in_range(pos[0], pos[0] + rag, self.base[base_flag].pos[0]):
-                #游戏状态 right_win, left_win
-                    game_statue = self.base[base_flag].loss_HP(i)
+                return i, None
+            
+        game_statue = None
+        base_flag = 'left' if 'right' == unit.flag else 'right'
+        # 与基地发生碰撞
+        if self.base[base_flag].pos[1] == pos[1] \
+                and is_in_range(pos[0], pos[0] + rag, self.base[base_flag].pos[0]):
+            # 游戏状态 right_win, left_win
+            game_statue = self.base[base_flag].loss_HP(unit)
 
         return None, game_statue
