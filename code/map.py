@@ -1,8 +1,8 @@
 # 游戏地图
 import pygame
 import sys
-from 实习.battle_filed import battle_filed
-from 实习.button import Button
+from battle_filed import battle_filed
+from button import Button
 from pygame.locals import *
 
 pygame.init()

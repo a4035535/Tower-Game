@@ -16,6 +16,14 @@ class unit_menu:
 
         if no == 1:
             return unit(100, 10, pos, no, 10, flag)
+        elif no == 2:
+            return unit(100, 10, pos, no, 10, flag)
+        elif no == 3:
+            return unit(100, 10, pos, no, 10, flag)
+        elif no == 4:
+            return unit(100, 10, pos, no, 10, flag)
+        elif no == 0:
+            return unit(100, 10, pos, no, 10, flag)
 
         return None
 
