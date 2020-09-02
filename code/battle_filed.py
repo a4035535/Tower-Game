@@ -8,7 +8,7 @@ from base import base
 DEFAULT_DISTANCE = 50
 BASE_HP = 500
 POS_LEFT = 0
-POS_RIGHT = 1200
+POS_RIGHT = 1100
 
 
 class battle_filed:
@@ -66,6 +66,7 @@ class battle_filed:
         # 与基地发生碰撞
         if is_in_range(pos[0], pos[0] + rag, self.base[base_flag].pos):
             # 游戏状态 right_win, left_win
+            self.unit_list.remove(unit)
             game_statue = self.base[base_flag].loss_HP(unit)
 
         return None, game_statue
