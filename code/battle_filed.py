@@ -1,4 +1,5 @@
 from unit_menu import unit_menu
+from enemy_menu import enemy_menu
 
 DEFAULT_DISTANCE = 50
 DEFAULT_ROW = [310, 410, 510]
@@ -17,18 +18,25 @@ class battle_filed:
         self.unit_menu = unit_menu()
         self.base = {'left': base(BASE_HP, POS_LEFT, 'left'),
                      'right': base(BASE_HP, POS_RIGHT, 'right')}
+        self.enemy_menu = enemy_menu()
 
     def action(self):
         for i in self.unit_list:
             enemy, game_statue = self.check_collision(i)
             i.action(enemy)
+
         now_cd, max_cd = self.unit_menu.action()
+        enemy_list = self.enemy_menu.action()
+        for i in enemy_list:
+            self.unit_list.append(i)
+
         dead_list = []
         for i in self.unit_list:
             if i.HP <= 0:
                 dead_list.append(i)
         for i in dead_list:
             self.unit_list.remove(i)
+
         return self.unit_list, now_cd, max_cd
 
     def add_unit(self, no, row, flag):

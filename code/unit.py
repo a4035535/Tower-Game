@@ -31,7 +31,8 @@ class unit:
                 self.status = 4
 
     def move(self):
-        self.pos = (self.pos[0]+5, self.pos[1])
+        direction = 5 if self.flag == 'left' else -5
+        self.pos = (self.pos[0] + direction, self.pos[1])
 
     def attack(self, enemy):
         # 每10帧进行一次攻击
