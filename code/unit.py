@@ -9,7 +9,7 @@ class unit:
         self.now_interval = 0
         # 单位阵营
         self.flag = flag
-        # status: move_1 move_2 att_1 att_2
+        # status: 0~3为move_1~move_4, 4~7为att_1~att_4
         self.status = 0
         self.ID = ID
 
@@ -17,13 +17,21 @@ class unit:
         # 调整状态 -> 执行动作
         if collision_statue is None:
             self.move()
+            if self.status <= 3:
+                self.status += 1
+            else:
+                self.status = 0
         elif collision_statue.flag == self.flag:
             pass
         else:
             self.attack(collision_statue)
+            if self.status <= 7:
+                self.status += 1
+            else:
+                self.status = 4
 
     def move(self):
-        pass
+        self.pos = (self.pos[0]+5, self.pos[1])
 
     def attack(self, enemy):
         # 每10帧进行一次攻击
