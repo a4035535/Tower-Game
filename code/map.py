@@ -1,14 +1,12 @@
 # 游戏地图
 import pygame
 import sys
-
 from button import Button
 from pygame.locals import *
-
-pygame.init()
-from PIL import Image, ImageGrab
+from PIL import Image
 import warnings
 
+pygame.init()
 warnings.filterwarnings("ignore")
 
 map_w = 1200
@@ -16,18 +14,22 @@ map_h = 600
 bgcolor = 0, 200, 0
 color_base1 = 255, 255, 0
 color_base2 = 255, 0, 0
-width = 0  # solid fill
+width = 0
 base_w = 100
 base_h = 300
+
 screen = pygame.display.set_mode((map_w, map_h))
+
 pygame.display.set_caption("Drawing Rectangles")
+
 background = pygame.image.load("map.jpg")
 background = pygame.transform.scale(background, (1200, 600))
+
 road = pygame.image.load("road.jpg")
-# print(pygame.image.info())
 road = pygame.transform.scale(road, (1200, 100))
+
 category = -1
-# photo = pygame.transform.scale(photo,(60,60))
+
 base_left = pygame.image.load("base_left.png")
 base_left = pygame.transform.scale(base_left, (base_w + 50, base_h + 100))
 base_right = pygame.image.load("base_right.png")
@@ -46,12 +48,13 @@ pos_road1 = 0, road_margin, road_w, road_h
 pos_road2 = 0, road_margin + road_h + road_gap, road_w, road_h
 pos_road3 = 0, road_margin + (road_h + road_gap) * 2, road_w, road_h
 
-
-class Soldier:
-    def __init__(self, unit):
-        self.pos = unit.pos
-        self.arms = unit.ID
-        self.state = unit.status
+UP_IMAGE = []
+DOWN_IMAGE = []
+for i in range(5):
+    upImageFilename = "head" + str(i) + "0.jpg"
+    downImageFilename = "head" + str(i) + "1.jpg"
+    UP_IMAGE.append(upImageFilename)
+    DOWN_IMAGE.append(downImageFilename)
 
 
 def mouse_move(mouse_image_filename):
@@ -88,12 +91,14 @@ class map:
             fight_wh = Image.open("fight" + str(i.ID) + ".png").size
             if i.status < 4:
                 screen.blit(photo, i.pos,
-                            pygame.Rect((move_wh[0] / 4) * i.status, move_wh[1] / 2, move_wh[0] / 4, move_wh[1] / 4))
+                            pygame.Rect((move_wh[0] / 4) * i.status, move_wh[1] / 2, move_wh[0] / 4, move_wh[1] / 4)
+                            )
                 i.status = (i.status + 1) % 4
             else:
                 screen.blit(fight, i.pos,
                             pygame.Rect((fight_wh[0] / 4) * (i.status - 4), fight_wh[1] / 2, fight_wh[0] / 4,
-                                        fight_wh[1] / 4))
+                                        fight_wh[1] / 4)
+                            )
                 i.status = 4 + (i.status + 1) % 4
 
     def addSoldier(self, road_index, category):
@@ -155,8 +160,8 @@ if __name__ == "__main__":
         screen.blit(base_right, pos_base2)
         game.Soldiers(model.action())
         for i in range(5):
-            upImageFilename = "head" + str(i) + "0.jpg"
-            downImageFilename = "head" + str(i) + "1.jpg"
+            upImageFilename = UP_IMAGE[i]
+            downImageFilename = DOWN_IMAGE[i]
             button = Button(upImageFilename, downImageFilename, (60 * (i + 1), 50), screen, category)
             category = button.render()
         if (category >= 0):
