@@ -1,7 +1,7 @@
 from unit_menu import unit_menu
 
 DEFAULT_DISTANCE = 50
-DEFAULT_ROW = [100, 200, 300]
+DEFAULT_ROW = [310, 410, 510]
 DEFAULT_X = [100, 1100]
 from base import base
 
@@ -64,8 +64,7 @@ class battle_filed:
         game_statue = None
         base_flag = 'left' if 'right' == unit.flag else 'right'
         # 与基地发生碰撞
-        if self.base[base_flag].pos[1] == pos[1] \
-                and is_in_range(pos[0], pos[0] + rag, self.base[base_flag].pos[0]):
+        if is_in_range(pos[0], pos[0] + rag, self.base[base_flag].pos):
             # 游戏状态 right_win, left_win
             game_statue = self.base[base_flag].loss_HP(unit)
 

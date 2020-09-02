@@ -14,8 +14,9 @@ class unit_menu:
         else:
             self.now_cool_down[no] = 0
 
-        if no == 1:
-            return unit(100, 10, pos, 10, flag)
+        if no == 0:
+            return unit(100, 10, pos, 0, 10, flag)
+
 
         return None
 

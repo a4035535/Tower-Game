@@ -13,12 +13,15 @@ warnings.filterwarnings("ignore")
 
 map_w = 1200
 map_h = 600
+
 bgcolor = 0, 200, 0
 color_base1 = 255, 255, 0
 color_base2 = 255, 0, 0
+
 width = 0  # solid fill
 base_w = 100
 base_h = 300
+
 screen = pygame.display.set_mode((map_w, map_h))
 pygame.display.set_caption("Drawing Rectangles")
 background = pygame.image.load("map.jpg")
@@ -83,11 +86,13 @@ class map:
         for i in army:
             photo = pygame.image.load("move" + str(i.arms) + ".png")
             fight = pygame.image.load("fight" + str(i.arms) + ".png")
+
             move_wh = Image.open("move" + str(i.arms) + ".png").size
             fight_wh = Image.open("fight" + str(i.arms) + ".png").size
+
             if i.state < 4:
                 screen.blit(photo, i.pos,
-                            pygame.Rect((move_wh[0] / 4) * i.state, move_wh[1] / 2, move_wh[0] / 4, move_wh[1] / 4))
+                                pygame.Rect((move_wh[0] / 4) * i.state, move_wh[1] / 2, move_wh[0] / 4, move_wh[1] / 4))
                 i.state = (i.state + 1) % 4
             else:
                 screen.blit(fight, i.pos,
@@ -140,14 +145,15 @@ if __name__ == "__main__":
                 pygame.quit()
                 sys.exit()
 
-        screen.blit(background, (0, 0))
-        screen.blit(road, pos_road1)
-        screen.blit(road, pos_road2)
-        screen.blit(road, pos_road3)
+            screen.blit(background, (0, 0))
+            screen.blit(road, pos_road1)
+            screen.blit(road, pos_road2)
+            screen.blit(road, pos_road3)
 
-        screen.blit(base_left, pos_base1)
-        screen.blit(base_right, pos_base2)
+            screen.blit(base_left, pos_base1)
+            screen.blit(base_right, pos_base2)
 
+            game.Soldiers(model.action())
         for i in range(5):
             upImageFilename = "head" + str(i) + "0.jpg"
             downImageFilename = "head" + str(i) + "1.jpg"
