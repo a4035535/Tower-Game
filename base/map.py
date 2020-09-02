@@ -102,6 +102,9 @@ class map:
         self.category=category
         self.road_index=road_index
 
+    def getAttribute(self):
+        return self.road_index,self.category
+
     def isOnclick(self):
         global category
         point_x, point_y = pygame.mouse.get_pos()
