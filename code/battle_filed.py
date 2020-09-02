@@ -38,8 +38,8 @@ class battle_filed:
         y = DEFAULT_ROW[row]
 
         unit = self.unit_menu.creat_unit(no, (x, y), flag)
-
-        self.unit_list.append(unit)
+        if unit is not None:
+            self.unit_list.append(unit)
 
     def check_collision(self, unit):
         # 返回相遇对象，否则返回None

@@ -69,12 +69,7 @@ pos1 = base_w, road_margin, 60, 60
 pos2 = base_w, road_margin + road_h + road_gap, 60, 60
 pos3 = base_w, road_margin + (road_h + road_gap) * 2, 60, 60
 
-s1 = Soldier(pos1, 2, 1)
-s2 = Soldier(pos2, 3, 6)
-s3 = Soldier(pos3, 4, 7)
-
 road_index = 0
-army = [s1, s2, s3]
 
 
 class map:
@@ -104,9 +99,8 @@ class map:
         self.category = category
         self.road_index = road_index
 
-
     def getAttribute(self):
-        return self.road_index,self.category
+        return self.road_index, self.category
 
     def isOnclick(self):
         global category
@@ -119,6 +113,7 @@ class map:
                 in_y0 = road_margin < point_y < road_margin + road_h
                 in_y1 = road_margin + road_h + road_gap < point_y < road_margin + road_h + road_gap + road_h
                 in_y2 = road_margin + (road_h + road_gap) * 2 < point_y < road_margin + (road_h + road_gap) * 2 + road_h
+
                 print(point_y)
                 if (in_y0):
                     # 加一个兵
@@ -135,14 +130,16 @@ class map:
 
 
 if __name__ == "__main__":
+    from battle_filed import battle_filed
+
+    model = battle_filed()
     while True:
-        game = map(army)
+        game = map(model.action())
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
 
-        # screen.fill(bgcolor)
         screen.blit(background, (0, 0))
         screen.blit(road, pos_road1)
         screen.blit(road, pos_road2)
@@ -150,13 +147,7 @@ if __name__ == "__main__":
 
         screen.blit(base_left, pos_base1)
         screen.blit(base_right, pos_base2)
-        # pygame.draw.rect(screen, color_base1, pos_base1, width)
-        # pygame.draw.rect(screen, color_base2, pos_base2, width)
-        # pygame.draw.rect(screen, color_road, pos_road1, width)
-        # pygame.draw.rect(screen, color_road, pos_road2, width)
-        # pygame.draw.rect(screen, color_road, pos_road3, width)
-        game.Soldiers(army)
-        # pygame.draw.rect(screen, color_army, (100,100,100,100), 0)
+
         for i in range(5):
             upImageFilename = "head" + str(i) + "0.jpg"
             downImageFilename = "head" + str(i) + "1.jpg"
@@ -166,5 +157,8 @@ if __name__ == "__main__":
             mouse_image_filename = "head" + str(category) + "0.jpg"
             mouse_move(mouse_image_filename)
             game.isOnclick()
+            row, id = game.getAttribute()
+
+            model.add_unit(id, row, 'left')
 
         pygame.display.update()
