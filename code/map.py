@@ -157,6 +157,7 @@ if __name__ == "__main__":
             mouse_image_filename = "head" + str(category) + "0.jpg"
             mouse_move(mouse_image_filename)
             game.isOnclick()
+
             row, id = game.getAttribute()
 
             model.add_unit(id, row, 'left')
