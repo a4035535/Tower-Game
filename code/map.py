@@ -2,13 +2,15 @@
 import pygame
 import sys
 
-from 计算机视觉.专业方向实习.button import Button
+from button import Button
 from pygame.locals import *
-import time
+
 pygame.init()
-from PIL import Image,ImageGrab
+from PIL import Image, ImageGrab
 import warnings
+
 warnings.filterwarnings("ignore")
+
 map_w = 1200
 map_h = 600
 bgcolor = 0, 200, 0
@@ -20,40 +22,41 @@ base_h = 300
 screen = pygame.display.set_mode((map_w, map_h))
 pygame.display.set_caption("Drawing Rectangles")
 background = pygame.image.load("map.jpg")
-background = pygame.transform.scale(background,(1200,600))
+background = pygame.transform.scale(background, (1200, 600))
 road = pygame.image.load("road.jpg")
-#print(pygame.image.info())
-road = pygame.transform.scale(road,(1200,100))
+# print(pygame.image.info())
+road = pygame.transform.scale(road, (1200, 100))
 category = -1
-#photo = pygame.transform.scale(photo,(60,60))
+# photo = pygame.transform.scale(photo,(60,60))
 base_left = pygame.image.load("base_left.png")
-base_left = pygame.transform.scale(base_left,(base_w+50,base_h+100))
+base_left = pygame.transform.scale(base_left, (base_w + 50, base_h + 100))
 base_right = pygame.image.load("base_right.png")
-base_right = pygame.transform.scale(base_right,(base_w+50,base_h+100))
-base_margin = (map_h - base_h) / 2 +140
-pos_base1 = 0, base_margin-100, base_w, base_h
-pos_base2 = map_w - base_w-50, base_margin-100, base_w, base_h
+base_right = pygame.transform.scale(base_right, (base_w + 50, base_h + 100))
+base_margin = (map_h - base_h) / 2 + 140
+pos_base1 = 0, base_margin - 100, base_w, base_h
+pos_base2 = map_w - base_w - 50, base_margin - 100, base_w, base_h
 color_road = 0, 200, 200
 road_w = map_w - base_w * 2
 road_h = 60
 road_gap = (base_h - road_h * 3) / 3
+
 road_margin = base_margin + road_gap / 2
+
 pos_road1 = 0, road_margin, road_w, road_h
 pos_road2 = 0, road_margin + road_h + road_gap, road_w, road_h
 pos_road3 = 0, road_margin + (road_h + road_gap) * 2, road_w, road_h
 
 
 class Soldier:
-    def __init__(self, pos, arms, state):
-        self.pos = pos
-        self.arms = arms
-        self.state = state
-
+    def __init__(self, unit):
+        self.pos = unit.pos
+        self.arms = unit.ID
+        self.state = unit.status
 
 
 def mouse_move(mouse_image_filename):
     mouse_cursor = pygame.image.load(mouse_image_filename)
-    mouse_cursor = pygame.transform.scale(mouse_cursor,(50,50))
+    mouse_cursor = pygame.transform.scale(mouse_cursor, (50, 50))
     x, y = pygame.mouse.get_pos()
     # 计算光标左上角位置
     x -= mouse_cursor.get_width() / 2
@@ -62,26 +65,25 @@ def mouse_move(mouse_image_filename):
     screen.blit(mouse_cursor, (x, y))
 
 
+pos1 = base_w, road_margin, 60, 60
+pos2 = base_w, road_margin + road_h + road_gap, 60, 60
+pos3 = base_w, road_margin + (road_h + road_gap) * 2, 60, 60
 
-pos1 = base_w, road_margin,60,60
-pos2 = base_w, road_margin + road_h + road_gap,60,60
-pos3 = base_w, road_margin + (road_h + road_gap) * 2,60,60
 s1 = Soldier(pos1, 2, 1)
 s2 = Soldier(pos2, 3, 6)
 s3 = Soldier(pos3, 4, 7)
 
-road_index=0
+road_index = 0
 army = [s1, s2, s3]
 
 
 class map:
-    def __init__(self,army):
-        self.category=category
-        self.road_index=road_index
-        self.army=army
+    def __init__(self, army):
+        self.category = category
+        self.road_index = road_index
+        self.army = army
 
-
-    def Soldiers(self,army):
+    def Soldiers(self, army):
 
         for i in army:
             photo = pygame.image.load("move" + str(i.arms) + ".png")
@@ -98,9 +100,10 @@ class map:
                                         fight_wh[1] / 4))
                 i.state = 4 + (i.state + 1) % 4
 
-    def addSoldier(self,road_index, category):
-        self.category=category
-        self.road_index=road_index
+    def addSoldier(self, road_index, category):
+        self.category = category
+        self.road_index = road_index
+
 
     def isOnclick(self):
         global category
@@ -126,7 +129,9 @@ class map:
                     # 加一个兵
                     self.addSoldier(2, category)
                     category = -1
-if __name__=="__main__":
+
+
+if __name__ == "__main__":
     while True:
         game = map(army)
         for event in pygame.event.get():
@@ -160,6 +165,3 @@ if __name__=="__main__":
             game.isOnclick()
 
         pygame.display.update()
-
-
-

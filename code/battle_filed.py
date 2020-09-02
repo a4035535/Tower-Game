@@ -1,9 +1,9 @@
-from base.unit_menu import unit_menu
+from unit_menu import unit_menu
 
 DEFAULT_DISTANCE = 50
 DEFAULT_ROW = [100, 200, 300]
 DEFAULT_X = [100, 1100]
-from base.base import base
+from base import base
 
 DEFAULT_DISTANCE = 50
 BASE_HP = 500

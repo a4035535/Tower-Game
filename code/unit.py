@@ -1,7 +1,5 @@
-
-
 class unit:
-    def __init__(self, HP, ATK, pos, attack_interval=10, flag='left'):
+    def __init__(self, HP, ATK, pos, ID=0, attack_interval=10, flag='left'):
         self.HP = HP
         self.ATK = ATK
         # pos: (x,y) 如果不使用网格模式，直接使用图片坐标(pygame中精灵位置)
@@ -12,9 +10,8 @@ class unit:
         # 单位阵营
         self.flag = flag
         # status: move_1 move_2 att_1 att_2
-        self.status = 'move_1'
-
-
+        self.status = 0
+        self.ID = ID
 
     def action(self, collision_statue):
         # 调整状态 -> 执行动作
@@ -29,7 +26,7 @@ class unit:
         pass
 
     def attack(self, enemy):
-		# 每10帧进行一次攻击
+        # 每10帧进行一次攻击
         if self.now_interval == self.attack_interval:
             enemy.HP -= self.ATK
             self.now_interval = 0
