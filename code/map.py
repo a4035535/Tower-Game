@@ -2,7 +2,7 @@
 import pygame
 import sys
 
-from 实习.button import  Button
+from button import Button
 from pygame.locals import *
 
 pygame.init()
@@ -73,11 +73,11 @@ road_index = 0
 
 
 class map:
-    def __init__(self, army,model):
+    def __init__(self, army, model):
         self.category = category
         self.road_index = road_index
         self.army = army
-        self.model=model
+        self.model = model
 
     def Soldiers(self, army):
 
@@ -129,17 +129,19 @@ class map:
                     self.addSoldier(2, category)
                     category = -1
                 row, id = game.getAttribute()
-                print("row,id",row,id)
+                print("row,id", row, id)
                 self.model.add_unit(id, row, 'left')
                 print(self.model.unit_list)
-        #return self.model
+        # return self.model
+
 
 if __name__ == "__main__":
-    from 实习.battle_filed import battle_filed
+    from battle_filed import battle_filed
+
     model = battle_filed()
     while True:
-        #print(model.action())
-        game = map(model.action(),model)
+        # print(model.action())
+        game = map(model.action(), model)
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()

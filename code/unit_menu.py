@@ -15,7 +15,7 @@ class unit_menu:
             self.now_cool_down[no] = 0
 
         if no == 1:
-            return unit(100, 10, pos, 10, flag)
+            return unit(100, 10, pos, no, 10, flag)
 
         return None
 
