@@ -2,7 +2,7 @@
 import pygame
 import sys
 
-from button import Button
+from 实习.button import Button
 from pygame.locals import *
 
 pygame.init()
@@ -46,12 +46,12 @@ pos_road1 = 0, road_margin, road_w, road_h
 pos_road2 = 0, road_margin + road_h + road_gap, road_w, road_h
 pos_road3 = 0, road_margin + (road_h + road_gap) * 2, road_w, road_h
 
-
-class Soldier:
-    def __init__(self, unit):
-        self.pos = unit.pos
-        self.arms = unit.ID
-        self.state = unit.status
+#
+# class Soldier:
+#     def __init__(self, unit):
+#         self.pos = unit.pos
+#         self.arms = unit.ID
+#         self.state = unit.status
 
 
 def mouse_move(mouse_image_filename):
@@ -86,15 +86,18 @@ class map:
             fight = pygame.image.load("fight" + str(i.ID) + ".png")
             move_wh = Image.open("move" + str(i.ID) + ".png").size
             fight_wh = Image.open("fight" + str(i.ID) + ".png").size
+            if(i.flag=="right"):
+                move_wh[1]/=2
+                fight_wh[1]/=2
             if i.status < 4:
                 screen.blit(photo, i.pos,
                             pygame.Rect((move_wh[0] / 4) * i.status, move_wh[1] / 2, move_wh[0] / 4, move_wh[1] / 4))
-                i.status = (i.status + 1) % 4
+                #i.status = (i.status + 1) % 4
             else:
                 screen.blit(fight, i.pos,
                             pygame.Rect((fight_wh[0] / 4) * (i.status - 4), fight_wh[1] / 2, fight_wh[0] / 4,
                                         fight_wh[1] / 4))
-                i.status = 4 + (i.status + 1) % 4
+                #i.status = 4 + (i.status + 1) % 4
 
     def addSoldier(self, road_index, category):
         self.category = category
@@ -136,7 +139,7 @@ class map:
 
 
 if __name__ == "__main__":
-    from battle_filed import battle_filed
+    from 实习.battle_filed import battle_filed
 
     model = battle_filed()
     while True:
@@ -153,11 +156,19 @@ if __name__ == "__main__":
         screen.blit(road, pos_road3)
         screen.blit(base_left, pos_base1)
         screen.blit(base_right, pos_base2)
-        game.Soldiers(model.action())
+        unit_lists,now_cd,max_cd=model.action()
+        print(now_cd,max_cd)
+        game.Soldiers(unit_lists)
         for i in range(5):
             upImageFilename = "head" + str(i) + "0.jpg"
             downImageFilename = "head" + str(i) + "1.jpg"
             button = Button(upImageFilename, downImageFilename, (60 * (i + 1), 50), screen, category)
+            cd1 = pygame.draw.rect(screen,(0,255,0),(60*(i+1)+25, 25,6,50),0)
+            if(max_cd[i]-now_cd[i]):
+                cd2 = pygame.draw.rect(screen,(255,0,0),(60*(i+1)+25, 25,6,50*((max_cd[i]-now_cd[i])/max_cd[i])),0)
+
+
+
             category = button.render()
         if (category >= 0):
             mouse_image_filename = "head" + str(category) + "0.jpg"
