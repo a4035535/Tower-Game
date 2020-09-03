@@ -54,6 +54,7 @@ class battle_filed:
         pos = unit.pos
 
         rag = unit.range if unit.flag == 'left' else -unit.range
+        game_statue = 'running'
 
         def is_in_range(a, b, c):
             if a < b:
@@ -65,9 +66,9 @@ class battle_filed:
             # 判定碰撞
             if i.flag != unit.flag and i.pos[1] == pos[1] \
                     and is_in_range(pos[0], pos[0] + rag, i.pos[0]):
-                return i, None
+                return i, game_statue
 
-        game_statue = None
+
         base_flag = 'left' if 'right' == unit.flag else 'right'
         # 与基地发生碰撞
         if is_in_range(pos[0], pos[0] + rag, self.base[base_flag].pos):
