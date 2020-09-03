@@ -44,12 +44,25 @@ pos_road2 = 0, road_margin + road_h + road_gap, road_w, road_h
 pos_road3 = 0, road_margin + (road_h + road_gap) * 2, road_w, road_h
 road_index = 0
 all_image = {}
-
+head_image =[{},{}]
+left_move_image =[{},{},{},{},{}]
+left_fight_image=[{},{},{},{},{}]
+right_move_image =[{},{},{},{},{}]
+right_fight_image=[{},{},{},{},{}]
 for i in range(5):
     photo = pygame.image.load("move" + str(i) + ".png")
     fight = pygame.image.load("fight" + str(i) + ".png")
     move_wh = Image.open("move" + str(i) + ".png").size
+    print("move_wh",move_wh)
     fight_wh = Image.open("fight" + str(i) + ".png").size
+    for j in range(4):
+        left_move_image[i][j]= [(move_wh[0] / 4) * j, move_wh[1] / 2, move_wh[0] / 4, move_wh[1] / 4]
+        left_fight_image[i][j]= [(fight_wh[0] / 4) * j, fight_wh[1] / 2, fight_wh[0] / 4, fight_wh[1] / 4]
+        right_move_image[i][j] = [(move_wh[0] / 4) * j, move_wh[1] / 4, move_wh[0] / 4, move_wh[1] / 4]
+        right_fight_image[i][j] = [(fight_wh[0] / 4) * j, fight_wh[1] / 4, fight_wh[0] / 4, fight_wh[1] / 4]
+    head_image[0][i]= [move_wh[0] / 4, 0, move_wh[0] / 4, move_wh[1] / 4]
+    head_image[1][i] = [(move_wh[0] / 4)*3, 0, move_wh[0] / 4, move_wh[1] / 4]
+
     all_image[i] = [photo, fight, move_wh, fight_wh]
 
 
@@ -61,28 +74,19 @@ class map:
         self.over = 0
 
     def displaySoldiers(self, army, base_hp):
-
         for i in army:
-            photo = all_image[i.ID][0]
-            fight = all_image[i.ID][1]
-            move_wh = all_image[i.ID][2]
-            fight_wh = all_image[i.ID][3]
-            move_wh1 = move_wh[1]
-            fight_wh1 = fight_wh[1]
-            now_status = i.status
-            if (i.flag == "right"):
-                move_wh1 = move_wh1 / 2
-                fight_wh1 = fight_wh1 / 2
             if i.status < 4:
-                screen.blit(photo, i.pos,
-                            pygame.Rect((move_wh[0] / 4) * now_status, move_wh1 / 2, move_wh[0] / 4, move_wh[1] / 4))
-
-                # i.status = (i.status + 1) % 4
+                photo = left_move_image[i.ID][i.status]
+                if (i.flag == "right"):
+                    photo = right_move_image[i.ID][i.status]
+                #print("fadfaf",all_image[i.ID][0])
+                screen.blit(all_image[i.ID][0], i.pos,pygame.Rect(photo))
             else:
-                screen.blit(fight, i.pos,
-                            pygame.Rect((fight_wh[0] / 4) * (now_status - 4), fight_wh1 / 2, fight_wh[0] / 4,
-                                        fight_wh[1] / 4))
-                # i.status = 4 + (i.status + 1) % 4
+                fight = left_fight_image[i.ID][i.status-4]
+                print(i.ID,"hi")
+                if (i.flag == "right"):
+                    fight = right_fight_image[i.ID][i.status-4]
+                screen.blit(all_image[i.ID][1], i.pos,pygame.Rect(fight))
             pygame.draw.rect(screen, (255, 0, 0), (i.pos[0], i.pos[1], 50, 4), 0)
             pygame.draw.rect(screen, (0, 255, 0), (i.pos[0], i.pos[1], 50 * (i.HP / UNIT_MAX_HP[i.ID]), 4), 0)
 
@@ -98,15 +102,15 @@ class map:
     def getAttribute(self):
         return self.road_index, self.category
 
-    def mouse_move(self, mouse_image_filename):
-        mouse_cursor = pygame.image.load(mouse_image_filename)
-        mouse_cursor = pygame.transform.scale(mouse_cursor, (50, 50))
+    def mouse_move(self, img,mouse_cursor):
+        #mouse_cursor = pygame.image.load(mouse_image_filename)
+        # mouse_cursor = pygame.transform.scale(mouse_cursor, (50, 50))
         x, y = pygame.mouse.get_pos()
         # 计算光标左上角位置
-        x -= mouse_cursor.get_width() / 2
-        y -= mouse_cursor.get_height() / 2
+        x -= mouse_cursor[2] / 2
+        y -= mouse_cursor[3] / 2
         # 将光标画上去
-        screen.blit(mouse_cursor, (x, y))
+        screen.blit(img, (x, y),pygame.Rect(mouse_cursor))
 
     def isOnclick(self):
         global category
@@ -159,18 +163,18 @@ class map:
     def load_menu(self, now_cd, max_cd):
         global category
         for i in range(5):
-            upImageFilename = "head" + str(i) + "0.jpg"
-            downImageFilename = "head" + str(i) + "1.jpg"
-            button = Button(upImageFilename, downImageFilename, (60 * (i + 1), 50), screen, category)
+            upImagePos = head_image[0][i]
+            downImagePos = head_image[1][i]
+            button = Button(upImagePos, downImagePos, (60 * (i + 1), 50), screen, category,all_image[i][0])
             cd1 = pygame.draw.rect(screen, (0, 255, 0), (60 * (i + 1) + 25, 25, 6, 50), 0)
             if (max_cd[i] - now_cd[i]):
                 cd2 = pygame.draw.rect(screen, (255, 0, 0),
                                        (60 * (i + 1) + 25, 25, 6, 50 * ((max_cd[i] - now_cd[i]) / max_cd[i])), 0)
             category = button.render()
         if (category >= 0):
-            mouse_image_filename = "head" + str(category) + "0.jpg"
+            mouse_image = all_image[category][0]
             if(now_cd[category]==max_cd[category]):
-                self.mouse_move(mouse_image_filename)
+                self.mouse_move(mouse_image,head_image[0][category])
             game.isOnclick()
 
 

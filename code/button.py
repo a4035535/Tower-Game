@@ -6,19 +6,20 @@ from pygame.locals import *
 
 
 class Button(object):
-    def __init__(self, upimage, downimage, position,screen,category):
-        self.imageUp = pygame.transform.scale(pygame.image.load(upimage).convert_alpha(),(50,50))
-        self.imageDown = pygame.transform.scale(pygame.image.load(downimage).convert_alpha(),(50,50))
+    def __init__(self, upimage, downimage, position,screen,category,all_image):
+        self.imageUp = upimage#pygame.transform.scale(pygame.image.load(upimage).convert_alpha(),(50,50))
+        self.imageDown = downimage#pygame.transform.scale(pygame.image.load(downimage).convert_alpha(),(50,50))
         self.position = position
         self.screen=screen
         self.category=category
+        self.all_image=all_image
 
 
 
     def isOver(self):
         point_x, point_y = pygame.mouse.get_pos()
         x, y = self.position
-        w, h = self.imageUp.get_size()
+        w, h = self.imageUp[2],self.imageUp[3]
 
         in_x = x - w / 2 < point_x < x + w / 2
         in_y = y - h / 2 < point_y < y + h / 2
@@ -36,13 +37,15 @@ class Button(object):
         return in_x and in_y
 
     def render(self):
-        w, h = self.imageUp.get_size()
-        x, y = self.position
 
+        w, h = self.imageUp[2],self.imageUp[3]
+        print(w,h,"whwh")
+        x, y = self.position
+        print(self.all_image)
         if self.isOver():
-            self.screen.blit(self.imageDown, (x - w / 2, y - h / 2))
+            self.screen.blit(self.all_image, (x - w / 2, y - h / 2),pygame.Rect(self.imageDown))
         else:
-            self.screen.blit(self.imageUp, (x - w / 2, y - h / 2))
+            self.screen.blit(self.all_image, (x - w / 2, y - h / 2),pygame.Rect(self.imageUp))
 
         return self.category
 
