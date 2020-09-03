@@ -1,3 +1,4 @@
+from unit import unit
 from unit_menu import unit_menu
 from enemy_menu import enemy_menu
 from default_data import *
@@ -52,13 +53,13 @@ class battle_filed:
         if unit is not None:
             self.unit_list.append(unit)
 
-    def check_collision(self, unit):
+    def check_collision(self, target_unit):
         # 返回相遇对象，否则返回None
         # 注：这里最好只检查面前，以减少计算量并且避免BUG
         # 方向可以通过 unit.flag 判断
-        pos = unit.pos
+        pos = target_unit.pos
         game_statue = 'running'
-        rag = DEFAULT_DISTANCE if unit.flag == 'left' else -DEFAULT_DISTANCE
+        rag = DEFAULT_DISTANCE if target_unit.flag == 'left' else -DEFAULT_DISTANCE
 
         def is_in_range(a, b, c):
             if a < b:
@@ -68,16 +69,15 @@ class battle_filed:
 
         for i in self.unit_list:
             # 判定碰撞
-            if i.flag != unit.flag and i.pos[1] == pos[1] \
+            if i.flag != target_unit.flag and i.pos[1] == pos[1] \
                     and is_in_range(pos[0], pos[0] + rag, i.pos[0]):
                 return i, game_statue
 
-
-        base_flag = 'left' if 'right' == unit.flag else 'right'
+        base_flag = 'left' if 'right' == target_unit.flag else 'right'
         # 与基地发生碰撞
         if is_in_range(pos[0], pos[0] + rag, self.base[base_flag].pos):
             # 游戏状态 right_win, left_win
-            self.unit_list.remove(unit)
-            game_statue = self.base[base_flag].loss_HP(unit)
+            self.unit_list.remove(target_unit)
+            game_statue = self.base[base_flag].loss_HP(target_unit)
 
-        return None, game_statue
+        return unit(100, 10, (0, 0), -1, 10, base_flag, 0, 0), game_statue
