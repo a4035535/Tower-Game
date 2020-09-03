@@ -40,7 +40,7 @@ class battle_filed:
         for i in dead_list:
             self.unit_list.remove(i)
 
-        return self.unit_list, now_cd, max_cd, [self.base['left'].HP, self.base['right'].HP], game_statue
+        return self.unit_list, now_cd, max_cd, [self.base['left'].HP,self.base['right'].HP], game_statue
 
     def add_unit(self, no, row, flag):
         # row: 0 1 2 标记是哪三条路
