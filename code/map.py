@@ -20,7 +20,9 @@ pygame.display.set_caption("塔防")
 background = pygame.image.load("map.jpg")
 background = pygame.transform.scale(background, (1200, 600))
 road = pygame.image.load("road.jpg")
-
+left_win_img=pygame.image.load("win.png")
+right_win_img=pygame.image.load("lose.png")
+right_win_img = pygame.transform.scale(right_win_img, (531, 293))
 road = pygame.transform.scale(road, (1200, 100))
 category = -1
 
@@ -122,21 +124,22 @@ class map:
                 if (in_y0):
                     # 加一个兵
                     self.addSoldier(0, category)
+                    self.model.add_unit(category, 0, 'left')
                     category = -1
                 elif (in_y1):
                     # 加一个兵
                     self.addSoldier(1, category)
+                    self.model.add_unit(category, 1, 'left')
                     category = -1
                 elif (in_y2):
                     # 加一个兵
                     self.addSoldier(2, category)
+                    self.model.add_unit(category, 2, 'left')
                     category = -1
-                row, id = game.getAttribute()
-                print("row,id", row, id)
-                self.model.add_unit(id, row, 'left')
-                # print(self.model.unit_list)
+                #row, id = game.getAttribute()
+                #self.model.add_unit(id, row, 'left')
 
-    def load_background(self):
+    def load_background(self,current_status):
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -147,6 +150,12 @@ class map:
         screen.blit(road, pos_road3)
         screen.blit(base_left, pos_base1)
         screen.blit(base_right, pos_base2)
+        if(current_status=="left_win"):
+            screen.blit(left_win_img,(350,150))
+        elif(current_status=="right_win"):
+            screen.blit(right_win_img, (350, 150))
+
+
 
     def load_menu(self, now_cd, max_cd):
         global category
@@ -170,10 +179,13 @@ if __name__ == "__main__":
     # unit_lists, now_cd, max_cd = model.action()
     game = map(model)
     while True:
-        unit_lists, now_cd, max_cd = model.action()
-        base_hp=[500,200]
+        unit_lists, now_cd, max_cd,base_hp,current_status = model.action()
+        #加base_hp
+        #加current_status 三个状态：running left_win right_win
+        #base_hp=[500,200]
         # game = map(unit_lists, model)
-        game.load_background()
+        #current_status="running"
+        game.load_background(current_status)
         game.displaySoldiers(unit_lists,base_hp)
         game.load_menu(now_cd, max_cd)
         pygame.display.update()
