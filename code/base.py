@@ -5,7 +5,7 @@ class base:
         self.flag = flag
 
     def loss_HP(self, enemy):
-        self.HP -= 200
+        self.HP -= enemy.ATK
         if self.HP <= 0:
             if self.flag == 'right':
                 return 'left_win'

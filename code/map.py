@@ -58,7 +58,7 @@ class map:
         self.category = category
         self.road_index = road_index
         self.model = model
-        self.over=0
+        self.over = 0
 
     def displaySoldiers(self, army, base_hp):
 
@@ -149,12 +149,12 @@ class map:
         screen.blit(road, pos_road3)
         screen.blit(base_left, pos_base1)
         screen.blit(base_right, pos_base2)
-        if(current_status=="left_win"):
-            screen.blit(left_win_img,(350,150))
-            self.over=1
-        elif(current_status=="right_win"):
+        if (current_status == "left_win"):
+            screen.blit(left_win_img, (350, 150))
+            self.over = 1
+        elif (current_status == "right_win"):
             screen.blit(right_win_img, (350, 150))
-            self.over=1
+            self.over = 1
 
     def load_menu(self, now_cd, max_cd):
         global category
@@ -179,15 +179,14 @@ if __name__ == "__main__":
     # unit_lists, now_cd, max_cd = model.action()
     game = map(model)
     while True:
-        unit_lists, now_cd, max_cd,base_hp,current_status = model.action()
+        unit_lists, now_cd, max_cd, base_hp, current_status = model.action()
 
         game.load_background(current_status)
-        if(game.over):
-            break;
-        game.displaySoldiers(unit_lists,base_hp)
+        if game.over:
+            break
+        game.displaySoldiers(unit_lists, base_hp)
         game.load_menu(now_cd, max_cd)
         pygame.display.update()
-        game.over=1
     while True:
         map(model).load_background(current_status)
         pygame.display.update()
