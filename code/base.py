@@ -7,9 +7,6 @@ class base:
     def loss_HP(self, enemy):
         self.HP -= enemy.ATK
         if self.HP <= 0:
-            if self.flag == 'right':
-                return 'left_win'
-            else:
-                return 'right_win'
+            return 'left_win' if self.flag == 'right' else 'right_win'
         else:
             return 'running'

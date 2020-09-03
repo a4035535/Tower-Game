@@ -27,7 +27,6 @@ class Button(object):
                     sys.exit()
                 elif event.type == MOUSEBUTTONUP:
                     # 获得鼠标位置
-                    # mouse_image_filename="head"+str(x//60-1)+"0.jpg"
                     category = x // 60 - 1
                     self.category = category
         return in_x and in_y

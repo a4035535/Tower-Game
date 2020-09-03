@@ -5,12 +5,12 @@ from battle_filed import battle_filed
 from button import Button
 from pygame.locals import *
 from default_data import *
-
-pygame.init()
-from PIL import Image, ImageGrab
+from PIL import Image
 import warnings
 
 warnings.filterwarnings("ignore")
+
+pygame.init()
 
 map_w = 1200
 map_h = 600
@@ -101,8 +101,6 @@ class map:
         return self.road_index, self.category
 
     def mouse_move(self, img, mouse_cursor):
-        # mouse_cursor = pygame.image.load(mouse_image_filename)
-        # mouse_cursor = pygame.transform.scale(mouse_cursor, (50, 50))
         x, y = pygame.mouse.get_pos()
         # 计算光标左上角位置
         x -= mouse_cursor[2] / 2
@@ -184,6 +182,7 @@ if __name__ == "__main__":
     game = map(model)
     while True:
         clock.tick(30)
+
         unit_lists, now_cd, max_cd, base_hp, current_status = model.action()
 
         game.load_background(current_status)
