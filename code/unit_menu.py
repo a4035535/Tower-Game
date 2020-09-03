@@ -18,13 +18,13 @@ class unit_menu:
         if no == 0:
             return unit(hp_list[0], 10, pos, no, 10, flag, 7, 50)
         elif no == 1:
-            return unit(hp_list[1], 10, pos, no, 10, flag, 5, 100)
+            return unit(hp_list[1], 12, pos, no, 12, flag, 5, 100)
         elif no == 2:
-            return unit(hp_list[2], 10, pos, no, 10, flag, 4, 60)
+            return unit(hp_list[2], 20, pos, no, 15, flag, 4, 60)
         elif no == 3:
-            return unit(hp_list[3], 10, pos, no, 10, flag, 4, 60)
+            return unit(hp_list[3], 20, pos, no, 10, flag, 4, 60)
         elif no == 4:
-            return unit(hp_list[4], 10, pos, no, 10, flag, 5, 130)
+            return unit(hp_list[4], 15, pos, no, 10, flag, 5, 130)
 
         return None
 
