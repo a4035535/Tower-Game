@@ -4,16 +4,13 @@ import sys
 from pygame.locals import *
 
 
-
 class Button(object):
-    def __init__(self, upimage, downimage, position,screen,category):
-        self.imageUp = pygame.transform.scale(pygame.image.load(upimage).convert_alpha(),(50,50))
-        self.imageDown = pygame.transform.scale(pygame.image.load(downimage).convert_alpha(),(50,50))
+    def __init__(self, upimage, downimage, position, screen, category):
+        self.imageUp = pygame.transform.scale(pygame.image.load(upimage).convert_alpha(), (50, 50))
+        self.imageDown = pygame.transform.scale(pygame.image.load(downimage).convert_alpha(), (50, 50))
         self.position = position
-        self.screen=screen
-        self.category=category
-
-
+        self.screen = screen
+        self.category = category
 
     def isOver(self):
         point_x, point_y = pygame.mouse.get_pos()
@@ -28,11 +25,10 @@ class Button(object):
                     pygame.quit()
                     sys.exit()
                 elif event.type == MOUSEBUTTONUP:
-                    print(x,y)
                     # 获得鼠标位置
-                    #mouse_image_filename="head"+str(x//60-1)+"0.jpg"
-                    category=x//60-1
-                    self.category=category
+                    # mouse_image_filename="head"+str(x//60-1)+"0.jpg"
+                    category = x // 60 - 1
+                    self.category = category
         return in_x and in_y
 
     def render(self):
@@ -45,5 +41,3 @@ class Button(object):
             self.screen.blit(self.imageUp, (x - w / 2, y - h / 2))
 
         return self.category
-
-

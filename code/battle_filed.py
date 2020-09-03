@@ -16,8 +16,10 @@ class battle_filed:
     def __init__(self):
         self.unit_list = []
         self.unit_menu = unit_menu()
-        self.base = {'left': base(BASE_MAX_HP[0], POS_LEFT, 'left'),
-                     'right': base(BASE_MAX_HP[0], POS_RIGHT, 'right')}
+        self.base = {
+            'left': base(BASE_MAX_HP[0], POS_LEFT, 'left'),
+            'right': base(BASE_MAX_HP[0], POS_RIGHT, 'right')
+        }
         self.enemy_menu = enemy_menu()
 
     def action(self):
