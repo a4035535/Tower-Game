@@ -5,7 +5,7 @@ from default_data import UNIT_MAX_HP
 class unit_menu:
     def __init__(self):
         self.units = []
-        self.cool_down = [40, 80, 80, 240, 120]
+        self.cool_down = [80, 160, 160, 480, 240]
         self.now_cool_down = self.cool_down.copy()
         self.n_units = len(self.cool_down)
 

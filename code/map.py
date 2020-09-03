@@ -44,24 +44,24 @@ pos_road2 = 0, road_margin + road_h + road_gap, road_w, road_h
 pos_road3 = 0, road_margin + (road_h + road_gap) * 2, road_w, road_h
 road_index = 0
 all_image = {}
-head_image =[{},{}]
-left_move_image =[{},{},{},{},{}]
-left_fight_image=[{},{},{},{},{}]
-right_move_image =[{},{},{},{},{}]
-right_fight_image=[{},{},{},{},{}]
+head_image = [{}, {}]
+left_move_image = [{}, {}, {}, {}, {}]
+left_fight_image = [{}, {}, {}, {}, {}]
+right_move_image = [{}, {}, {}, {}, {}]
+right_fight_image = [{}, {}, {}, {}, {}]
 for i in range(5):
     photo = pygame.image.load("move" + str(i) + ".png")
     fight = pygame.image.load("fight" + str(i) + ".png")
     move_wh = Image.open("move" + str(i) + ".png").size
-    print("move_wh",move_wh)
+
     fight_wh = Image.open("fight" + str(i) + ".png").size
     for j in range(4):
-        left_move_image[i][j]= [(move_wh[0] / 4) * j, move_wh[1] / 2, move_wh[0] / 4, move_wh[1] / 4]
-        left_fight_image[i][j]= [(fight_wh[0] / 4) * j, fight_wh[1] / 2, fight_wh[0] / 4, fight_wh[1] / 4]
+        left_move_image[i][j] = [(move_wh[0] / 4) * j, move_wh[1] / 2, move_wh[0] / 4, move_wh[1] / 4]
+        left_fight_image[i][j] = [(fight_wh[0] / 4) * j, fight_wh[1] / 2, fight_wh[0] / 4, fight_wh[1] / 4]
         right_move_image[i][j] = [(move_wh[0] / 4) * j, move_wh[1] / 4, move_wh[0] / 4, move_wh[1] / 4]
         right_fight_image[i][j] = [(fight_wh[0] / 4) * j, fight_wh[1] / 4, fight_wh[0] / 4, fight_wh[1] / 4]
-    head_image[0][i]= [move_wh[0] / 4, 0, move_wh[0] / 4, move_wh[1] / 4]
-    head_image[1][i] = [(move_wh[0] / 4)*3, 0, move_wh[0] / 4, move_wh[1] / 4]
+    head_image[0][i] = [move_wh[0] / 4, 0, move_wh[0] / 4, move_wh[1] / 4]
+    head_image[1][i] = [(move_wh[0] / 4) * 3, 0, move_wh[0] / 4, move_wh[1] / 4]
 
     all_image[i] = [photo, fight, move_wh, fight_wh]
 
@@ -79,14 +79,12 @@ class map:
                 photo = left_move_image[i.ID][i.status]
                 if (i.flag == "right"):
                     photo = right_move_image[i.ID][i.status]
-                #print("fadfaf",all_image[i.ID][0])
-                screen.blit(all_image[i.ID][0], i.pos,pygame.Rect(photo))
+                screen.blit(all_image[i.ID][0], i.pos, pygame.Rect(photo))
             else:
-                fight = left_fight_image[i.ID][i.status-4]
-                print(i.ID,"hi")
+                fight = left_fight_image[i.ID][i.status - 4]
                 if (i.flag == "right"):
-                    fight = right_fight_image[i.ID][i.status-4]
-                screen.blit(all_image[i.ID][1], i.pos,pygame.Rect(fight))
+                    fight = right_fight_image[i.ID][i.status - 4]
+                screen.blit(all_image[i.ID][1], i.pos, pygame.Rect(fight))
             pygame.draw.rect(screen, (255, 0, 0), (i.pos[0], i.pos[1], 50, 4), 0)
             pygame.draw.rect(screen, (0, 255, 0), (i.pos[0], i.pos[1], 50 * (i.HP / UNIT_MAX_HP[i.ID]), 4), 0)
 
@@ -102,15 +100,15 @@ class map:
     def getAttribute(self):
         return self.road_index, self.category
 
-    def mouse_move(self, img,mouse_cursor):
-        #mouse_cursor = pygame.image.load(mouse_image_filename)
+    def mouse_move(self, img, mouse_cursor):
+        # mouse_cursor = pygame.image.load(mouse_image_filename)
         # mouse_cursor = pygame.transform.scale(mouse_cursor, (50, 50))
         x, y = pygame.mouse.get_pos()
         # 计算光标左上角位置
         x -= mouse_cursor[2] / 2
         y -= mouse_cursor[3] / 2
         # 将光标画上去
-        screen.blit(img, (x, y),pygame.Rect(mouse_cursor))
+        screen.blit(img, (x, y), pygame.Rect(mouse_cursor))
 
     def isOnclick(self):
         global category
@@ -165,7 +163,7 @@ class map:
         for i in range(5):
             upImagePos = head_image[0][i]
             downImagePos = head_image[1][i]
-            button = Button(upImagePos, downImagePos, (60 * (i + 1), 50), screen, category,all_image[i][0])
+            button = Button(upImagePos, downImagePos, (60 * (i + 1), 50), screen, category, all_image[i][0])
             cd1 = pygame.draw.rect(screen, (0, 255, 0), (60 * (i + 1) + 25, 25, 6, 50), 0)
             if (max_cd[i] - now_cd[i]):
                 cd2 = pygame.draw.rect(screen, (255, 0, 0),
@@ -173,17 +171,19 @@ class map:
             category = button.render()
         if (category >= 0):
             mouse_image = all_image[category][0]
-            if(now_cd[category]==max_cd[category]):
-                self.mouse_move(mouse_image,head_image[0][category])
+            if (now_cd[category] == max_cd[category]):
+                self.mouse_move(mouse_image, head_image[0][category])
             game.isOnclick()
 
 
 if __name__ == "__main__":
+    clock = pygame.time.Clock()
     model = battle_filed()
     current_status = "running"
     # unit_lists, now_cd, max_cd = model.action()
     game = map(model)
     while True:
+        clock.tick(30)
         unit_lists, now_cd, max_cd, base_hp, current_status = model.action()
 
         game.load_background(current_status)
@@ -192,6 +192,7 @@ if __name__ == "__main__":
         game.displaySoldiers(unit_lists, base_hp)
         game.load_menu(now_cd, max_cd)
         pygame.display.update()
+
     while True:
         map(model).load_background(current_status)
         pygame.display.update()
