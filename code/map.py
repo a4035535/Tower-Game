@@ -189,4 +189,3 @@ if __name__ == "__main__":
         game.displaySoldiers(unit_lists,base_hp)
         game.load_menu(now_cd, max_cd)
         pygame.display.update()
-        print(game_statue)
