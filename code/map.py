@@ -4,7 +4,7 @@ import sys
 from battle_filed import battle_filed
 from button import Button
 from pygame.locals import *
-
+from default_data import *
 pygame.init()
 from PIL import Image, ImageGrab
 import warnings
@@ -56,7 +56,7 @@ class map:
         self.road_index = road_index
         self.model = model
 
-    def displaySoldiers(self, army):
+    def displaySoldiers(self, army,base_hp):
 
         for i in army:
             photo = all_image[i.ID][0]
@@ -65,21 +65,29 @@ class map:
             fight_wh = all_image[i.ID][3]
             move_wh1 = move_wh[1]
             fight_wh1 = fight_wh[1]
+            now_status = i.status
             if (i.flag == "right"):
+                print(i.status)
                 move_wh1 = move_wh1 / 2
                 fight_wh1 = fight_wh1 / 2
+            print(i.ID,now_status)
             if i.status < 4:
                 screen.blit(photo, i.pos,
-                            pygame.Rect((move_wh[0] / 4) * i.status, move_wh1 / 2, move_wh[0] / 4, move_wh[1] / 4))
+                            pygame.Rect((move_wh[0] / 4) * now_status, move_wh1 / 2, move_wh[0] / 4, move_wh[1] / 4))
 
                 # i.status = (i.status + 1) % 4
             else:
                 screen.blit(fight, i.pos,
-                            pygame.Rect((fight_wh[0] / 4) * (i.status - 4), fight_wh1 / 2, fight_wh[0] / 4,
+                            pygame.Rect((fight_wh[0] / 4) * (now_status - 4), fight_wh1 / 2, fight_wh[0] / 4,
                                         fight_wh[1] / 4))
                 # i.status = 4 + (i.status + 1) % 4
             pygame.draw.rect(screen, (255, 0, 0), (i.pos[0], i.pos[1], 50, 4), 0)
             pygame.draw.rect(screen, (0, 255, 0), (i.pos[0], i.pos[1], 50 * (i.HP / 100), 4), 0)
+
+        pygame.draw.rect(screen, (255, 0, 0), (40,200, 100, 6), 0)
+        pygame.draw.rect(screen, (0, 255, 0), (41, 201, 98*(base_hp[0]/BASE_MAX_HP[0]), 4), 0)
+        pygame.draw.rect(screen, (255, 0, 0), (1060,200, 100, 6), 0)
+        pygame.draw.rect(screen, (0, 255, 0), (1061, 201, 98*(base_hp[1]/BASE_MAX_HP[1]), 4),0)
 
     def addSoldier(self, road_index, category):
         self.category = category
@@ -163,8 +171,9 @@ if __name__ == "__main__":
     game = map(model)
     while True:
         unit_lists, now_cd, max_cd = model.action()
+        base_hp=[500,200]
         # game = map(unit_lists, model)
         game.load_background()
-        game.displaySoldiers(unit_lists)
+        game.displaySoldiers(unit_lists,base_hp)
         game.load_menu(now_cd, max_cd)
         pygame.display.update()
