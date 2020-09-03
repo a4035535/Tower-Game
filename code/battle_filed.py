@@ -57,7 +57,7 @@ class battle_filed:
         # 注：这里最好只检查面前，以减少计算量并且避免BUG
         # 方向可以通过 unit.flag 判断
         pos = unit.pos
-
+        game_statue = 'running'
         rag = DEFAULT_DISTANCE if unit.flag == 'left' else -DEFAULT_DISTANCE
 
         def is_in_range(a, b, c):
@@ -70,9 +70,9 @@ class battle_filed:
             # 判定碰撞
             if i.flag != unit.flag and i.pos[1] == pos[1] \
                     and is_in_range(pos[0], pos[0] + rag, i.pos[0]):
-                return i, None
+                return i, game_statue
 
-        game_statue = 'running'
+
         base_flag = 'left' if 'right' == unit.flag else 'right'
         # 与基地发生碰撞
         if is_in_range(pos[0], pos[0] + rag, self.base[base_flag].pos):
