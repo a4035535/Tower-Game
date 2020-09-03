@@ -27,7 +27,7 @@ class Button(object):
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-                elif event.type == MOUSEBUTTONDOWN:
+                elif event.type == MOUSEBUTTONUP:
                     print(x,y)
                     # 获得鼠标位置
                     #mouse_image_filename="head"+str(x//60-1)+"0.jpg"
