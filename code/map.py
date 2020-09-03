@@ -1,13 +1,16 @@
 # 游戏地图
 import pygame
 import sys
+<<<<<<< Updated upstream
 from battle_filed import battle_filed
+=======
+from PIL import Image
+import warnings
+>>>>>>> Stashed changes
 from button import Button
 from pygame.locals import *
 
 pygame.init()
-from PIL import Image, ImageGrab
-import warnings
 
 warnings.filterwarnings("ignore")
 
