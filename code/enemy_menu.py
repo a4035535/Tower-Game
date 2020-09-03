@@ -18,6 +18,7 @@ class enemy_menu(unit_menu):
             if self.now_cool_down[i] < self.base_cool_down[i]:
                 self.now_cool_down[i] += 1
             elif self.now_cool_down[i] == self.base_cool_down[i]:
+
                 row = random.randint(0, 2)
                 self.now_cool_down[i] = self.cool_down[i]
                 unit = self.creat_unit(i, (1100, ROW_Y[row]), 'right')

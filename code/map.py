@@ -1,16 +1,13 @@
 # 游戏地图
 import pygame
 import sys
-<<<<<<< Updated upstream
 from battle_filed import battle_filed
-=======
-from PIL import Image
-import warnings
->>>>>>> Stashed changes
 from button import Button
 from pygame.locals import *
 
 pygame.init()
+from PIL import Image, ImageGrab
+import warnings
 
 warnings.filterwarnings("ignore")
 
@@ -57,7 +54,6 @@ class map:
     def __init__(self, model):
         self.category = category
         self.road_index = road_index
-        # self.army = army
         self.model = model
 
     def displaySoldiers(self, army):
@@ -67,19 +63,23 @@ class map:
             fight = all_image[i.ID][1]
             move_wh = all_image[i.ID][2]
             fight_wh = all_image[i.ID][3]
+            move_wh1 = move_wh[1]
+            fight_wh1 = fight_wh[1]
             if (i.flag == "right"):
-                # 此处修改 原因为元组不可更改
-                move_wh = (move_wh[0], move_wh[1] // 2)
-                fight_wh = (move_wh[0], move_wh[1] // 2)
+                move_wh1 = move_wh1 / 2
+                fight_wh1 = fight_wh1 / 2
             if i.status < 4:
                 screen.blit(photo, i.pos,
-                            pygame.Rect((move_wh[0] / 4) * i.status, move_wh[1] / 2, move_wh[0] / 4, move_wh[1] / 4))
+                            pygame.Rect((move_wh[0] / 4) * i.status, move_wh1 / 2, move_wh[0] / 4, move_wh[1] / 4))
+
                 # i.status = (i.status + 1) % 4
             else:
                 screen.blit(fight, i.pos,
-                            pygame.Rect((fight_wh[0] / 4) * (i.status - 4), fight_wh[1] / 2, fight_wh[0] / 4,
+                            pygame.Rect((fight_wh[0] / 4) * (i.status - 4), fight_wh1 / 2, fight_wh[0] / 4,
                                         fight_wh[1] / 4))
                 # i.status = 4 + (i.status + 1) % 4
+            pygame.draw.rect(screen, (255, 0, 0), (i.pos[0], i.pos[1], 50, 4), 0)
+            pygame.draw.rect(screen, (0, 255, 0), (i.pos[0], i.pos[1], 50 * (i.HP / 100), 4), 0)
 
     def addSoldier(self, road_index, category):
         self.category = category
@@ -126,8 +126,7 @@ class map:
                 row, id = game.getAttribute()
                 print("row,id", row, id)
                 self.model.add_unit(id, row, 'left')
-                print(self.model.unit_list)
-        # return self.model
+                # print(self.model.unit_list)
 
     def load_background(self):
         for event in pygame.event.get():
