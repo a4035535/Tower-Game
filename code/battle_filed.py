@@ -1,12 +1,10 @@
 from unit_menu import unit_menu
 from enemy_menu import enemy_menu
 
-DEFAULT_DISTANCE = 50
 DEFAULT_ROW = [310, 410, 510]
 DEFAULT_X = [100, 1100]
 from base import base
 
-DEFAULT_DISTANCE = 50
 BASE_HP = 500
 POS_LEFT = 50
 POS_RIGHT = 1100
@@ -55,7 +53,7 @@ class battle_filed:
         # 方向可以通过 unit.flag 判断
         pos = unit.pos
 
-        rag = DEFAULT_DISTANCE if unit.flag == 'left' else -DEFAULT_DISTANCE
+        rag = unit.range if unit.flag == 'left' else -unit.range
 
         def is_in_range(a, b, c):
             if a < b:

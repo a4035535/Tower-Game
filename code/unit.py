@@ -1,5 +1,6 @@
 class unit:
-    def __init__(self, HP, ATK, pos, ID=0, attack_interval=10, flag='left'):
+    def __init__(self, HP, ATK, pos, ID=0, attack_interval=10,
+                 flag='left', speed=5, range=50):
         self.HP = HP
         self.ATK = ATK
         # pos: (x,y) 如果不使用网格模式，直接使用图片坐标(pygame中精灵位置)
@@ -12,6 +13,8 @@ class unit:
         # status: 0~3为move_1~move_4, 4~7为att_1~att_4
         self.status = 0
         self.ID = ID
+        self.speed = speed
+        self.range = range
 
     def action(self, collision_statue):
         # 调整状态 -> 执行动作
@@ -31,7 +34,7 @@ class unit:
                 self.status = 4
 
     def move(self):
-        direction = 5 if self.flag == 'left' else -5
+        direction = self.speed if self.flag == 'left' else -self.speed
         self.pos = (self.pos[0] + direction, self.pos[1])
 
     def attack(self, enemy):
