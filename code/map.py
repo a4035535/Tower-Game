@@ -57,6 +57,7 @@ class map:
         self.category = category
         self.road_index = road_index
         self.model = model
+        self.over=0
 
     def displaySoldiers(self, army,base_hp):
 
@@ -69,10 +70,9 @@ class map:
             fight_wh1 = fight_wh[1]
             now_status = i.status
             if (i.flag == "right"):
-                print(i.status)
+
                 move_wh1 = move_wh1 / 2
                 fight_wh1 = fight_wh1 / 2
-            print(i.ID,now_status)
             if i.status < 4:
                 screen.blit(photo, i.pos,
                             pygame.Rect((move_wh[0] / 4) * now_status, move_wh1 / 2, move_wh[0] / 4, move_wh[1] / 4))
@@ -115,12 +115,11 @@ class map:
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type == MOUSEBUTTONDOWN:
+            elif event.type == MOUSEBUTTONUP:
                 in_y0 = road_margin < point_y < road_margin + road_h
                 in_y1 = road_margin + road_h + road_gap < point_y < road_margin + road_h + road_gap + road_h
                 in_y2 = road_margin + (road_h + road_gap) * 2 < point_y < road_margin + (road_h + road_gap) * 2 + road_h
 
-                print(point_y)
                 if (in_y0):
                     # 加一个兵
                     self.addSoldier(0, category)
@@ -152,8 +151,10 @@ class map:
         screen.blit(base_right, pos_base2)
         if(current_status=="left_win"):
             screen.blit(left_win_img,(350,150))
+            self.over=1
         elif(current_status=="right_win"):
             screen.blit(right_win_img, (350, 150))
+            self.over=1
 
 
 
@@ -176,16 +177,22 @@ class map:
 
 if __name__ == "__main__":
     model = battle_filed()
+    current_status = "running"
     # unit_lists, now_cd, max_cd = model.action()
     game = map(model)
     while True:
-        unit_lists, now_cd, max_cd = model.action()
+        unit_lists, now_cd, max_cd,base_hp,current_status = model.action()
         #加base_hp
         #加current_status 三个状态：running left_win right_win
-        base_hp=[500,200]
+        #base_hp=[500,200]
         # game = map(unit_lists, model)
-        current_status="running"
         game.load_background(current_status)
+        if(game.over):
+            break;
         game.displaySoldiers(unit_lists,base_hp)
         game.load_menu(now_cd, max_cd)
+        pygame.display.update()
+        game.over=1
+    while True:
+        map(model).load_background(current_status)
         pygame.display.update()
