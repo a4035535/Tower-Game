@@ -179,12 +179,12 @@ if __name__ == "__main__":
     # unit_lists, now_cd, max_cd = model.action()
     game = map(model)
     while True:
-        unit_lists, now_cd, max_cd,base_hp,current_status = model.action()
+        unit_lists, now_cd, max_cd = model.action()
         #加base_hp
         #加current_status 三个状态：running left_win right_win
-        #base_hp=[500,200]
+        base_hp=[500,200]
         # game = map(unit_lists, model)
-        #current_status="running"
+        current_status="running"
         game.load_background(current_status)
         game.displaySoldiers(unit_lists,base_hp)
         game.load_menu(now_cd, max_cd)
