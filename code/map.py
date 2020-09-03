@@ -162,9 +162,10 @@ if __name__ == "__main__":
     # unit_lists, now_cd, max_cd = model.action()
     game = map(model)
     while True:
-        unit_lists, now_cd, max_cd = model.action()
+        unit_lists, now_cd, max_cd, bases, game_statue = model.action()
         # game = map(unit_lists, model)
         game.load_background()
         game.displaySoldiers(unit_lists)
         game.load_menu(now_cd, max_cd)
         pygame.display.update()
+        print(game_statue)
