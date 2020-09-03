@@ -1,10 +1,11 @@
 from unit import unit
+from default_data import UNIT_MAX_HP
 
 
 class unit_menu:
     def __init__(self):
         self.units = []
-        self.cool_down = [10, 20, 30, 40, 50]
+        self.cool_down = [40, 80, 80, 240, 120]
         self.now_cool_down = self.cool_down.copy()
         self.n_units = len(self.cool_down)
 
@@ -13,17 +14,17 @@ class unit_menu:
             return None
         else:
             self.now_cool_down[no] = 0
-
-        if no == 1:
-            return unit(100, 10, pos, no, 10, flag)
+        hp_list = [i for i in UNIT_MAX_HP]
+        if no == 0:
+            return unit(hp_list[0], 10, pos, no, 10, flag, 7, 50)
+        elif no == 1:
+            return unit(hp_list[1], 10, pos, no, 10, flag, 5, 100)
         elif no == 2:
-            return unit(100, 10, pos, no, 10, flag)
+            return unit(hp_list[2], 10, pos, no, 10, flag, 4, 60)
         elif no == 3:
-            return unit(100, 10, pos, no, 10, flag)
+            return unit(hp_list[3], 10, pos, no, 10, flag, 4, 60)
         elif no == 4:
-            return unit(100, 10, pos, no, 10, flag)
-        elif no == 0:
-            return unit(100, 10, pos, no, 10, flag)
+            return unit(hp_list[4], 10, pos, no, 10, flag, 5, 130)
 
         return None
 
