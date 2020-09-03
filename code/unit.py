@@ -20,7 +20,7 @@ class unit:
         # 调整状态 -> 执行动作
         if collision_statue is None:
             self.move()
-            if self.status <= 3:
+            if self.status < 3:
                 self.status += 1
             else:
                 self.status = 0
@@ -28,7 +28,7 @@ class unit:
             pass
         else:
             self.attack(collision_statue)
-            if self.status <= 7:
+            if self.status < 7:
                 self.status += 1
             else:
                 self.status = 4
