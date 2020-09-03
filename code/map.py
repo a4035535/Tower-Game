@@ -5,6 +5,7 @@ from battle_filed import battle_filed
 from button import Button
 from pygame.locals import *
 from default_data import *
+
 pygame.init()
 from PIL import Image, ImageGrab
 import warnings
@@ -20,8 +21,8 @@ pygame.display.set_caption("塔防")
 background = pygame.image.load("map.jpg")
 background = pygame.transform.scale(background, (1200, 600))
 road = pygame.image.load("road.jpg")
-left_win_img=pygame.image.load("win.png")
-right_win_img=pygame.image.load("lose.png")
+left_win_img = pygame.image.load("win.png")
+right_win_img = pygame.image.load("lose.png")
 right_win_img = pygame.transform.scale(right_win_img, (531, 293))
 road = pygame.transform.scale(road, (1200, 100))
 category = -1
@@ -58,7 +59,7 @@ class map:
         self.road_index = road_index
         self.model = model
 
-    def displaySoldiers(self, army,base_hp):
+    def displaySoldiers(self, army, base_hp):
 
         for i in army:
             photo = all_image[i.ID][0]
@@ -69,10 +70,8 @@ class map:
             fight_wh1 = fight_wh[1]
             now_status = i.status
             if (i.flag == "right"):
-                print(i.status)
                 move_wh1 = move_wh1 / 2
                 fight_wh1 = fight_wh1 / 2
-            print(i.ID,now_status)
             if i.status < 4:
                 screen.blit(photo, i.pos,
                             pygame.Rect((move_wh[0] / 4) * now_status, move_wh1 / 2, move_wh[0] / 4, move_wh[1] / 4))
@@ -86,10 +85,10 @@ class map:
             pygame.draw.rect(screen, (255, 0, 0), (i.pos[0], i.pos[1], 50, 4), 0)
             pygame.draw.rect(screen, (0, 255, 0), (i.pos[0], i.pos[1], 50 * (i.HP / UNIT_MAX_HP[i.ID]), 4), 0)
 
-        pygame.draw.rect(screen, (255, 0, 0), (40,200, 100, 6), 0)
-        pygame.draw.rect(screen, (0, 255, 0), (41, 201, 98*(base_hp[0]/BASE_MAX_HP[0]), 4), 0)
-        pygame.draw.rect(screen, (255, 0, 0), (1060,200, 100, 6), 0)
-        pygame.draw.rect(screen, (0, 255, 0), (1061, 201, 98*(base_hp[1]/BASE_MAX_HP[1]), 4),0)
+        pygame.draw.rect(screen, (255, 0, 0), (40, 200, 100, 6), 0)
+        pygame.draw.rect(screen, (0, 255, 0), (41, 201, 98 * (base_hp[0] / BASE_MAX_HP[0]), 4), 0)
+        pygame.draw.rect(screen, (255, 0, 0), (1060, 200, 100, 6), 0)
+        pygame.draw.rect(screen, (0, 255, 0), (1061, 201, 98 * (base_hp[1] / BASE_MAX_HP[1]), 4), 0)
 
     def addSoldier(self, road_index, category):
         self.category = category
@@ -120,26 +119,25 @@ class map:
                 in_y1 = road_margin + road_h + road_gap < point_y < road_margin + road_h + road_gap + road_h
                 in_y2 = road_margin + (road_h + road_gap) * 2 < point_y < road_margin + (road_h + road_gap) * 2 + road_h
 
-                print(point_y)
-                if (in_y0):
+                if in_y0:
                     # 加一个兵
                     self.addSoldier(0, category)
                     self.model.add_unit(category, 0, 'left')
                     category = -1
-                elif (in_y1):
+                elif in_y1:
                     # 加一个兵
                     self.addSoldier(1, category)
                     self.model.add_unit(category, 1, 'left')
                     category = -1
-                elif (in_y2):
+                elif in_y2:
                     # 加一个兵
                     self.addSoldier(2, category)
                     self.model.add_unit(category, 2, 'left')
                     category = -1
-                #row, id = game.getAttribute()
-                #self.model.add_unit(id, row, 'left')
+                # row, id = game.getAttribute()
+                # self.model.add_unit(id, row, 'left')
 
-    def load_background(self,current_status):
+    def load_background(self, current_status):
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -150,12 +148,10 @@ class map:
         screen.blit(road, pos_road3)
         screen.blit(base_left, pos_base1)
         screen.blit(base_right, pos_base2)
-        if(current_status=="left_win"):
-            screen.blit(left_win_img,(350,150))
-        elif(current_status=="right_win"):
+        if (current_status == "left_win"):
+            screen.blit(left_win_img, (350, 150))
+        elif (current_status == "right_win"):
             screen.blit(right_win_img, (350, 150))
-
-
 
     def load_menu(self, now_cd, max_cd):
         global category
@@ -179,8 +175,9 @@ if __name__ == "__main__":
     # unit_lists, now_cd, max_cd = model.action()
     game = map(model)
     while True:
-        unit_lists, now_cd, max_cd,base_hp,current_status = model.action()
+        unit_lists, now_cd, max_cd, base_hp, current_status = model.action()
+
         game.load_background(current_status)
-        game.displaySoldiers(unit_lists,base_hp)
+        game.displaySoldiers(unit_lists, base_hp)
         game.load_menu(now_cd, max_cd)
         pygame.display.update()
