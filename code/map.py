@@ -169,7 +169,8 @@ class map:
             category = button.render()
         if (category >= 0):
             mouse_image_filename = "head" + str(category) + "0.jpg"
-            self.mouse_move(mouse_image_filename)
+            if(now_cd[category]==max_cd[category]):
+                self.mouse_move(mouse_image_filename)
             game.isOnclick()
 
 
