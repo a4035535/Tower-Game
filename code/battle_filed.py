@@ -1,13 +1,12 @@
 from unit_menu import unit_menu
 from enemy_menu import enemy_menu
+from default_data import *
 
 DEFAULT_DISTANCE = 50
 DEFAULT_ROW = [310, 410, 510]
 DEFAULT_X = [100, 1100]
 from base import base
 
-DEFAULT_DISTANCE = 50
-BASE_HP = 500
 POS_LEFT = 50
 POS_RIGHT = 1100
 
@@ -16,8 +15,8 @@ class battle_filed:
     def __init__(self):
         self.unit_list = []
         self.unit_menu = unit_menu()
-        self.base = {'left': base(BASE_HP, POS_LEFT, 'left'),
-                     'right': base(BASE_HP, POS_RIGHT, 'right')}
+        self.base = {'left': base(BASE_MAX_HP[0], POS_LEFT, 'left'),
+                     'right': base(BASE_MAX_HP[0], POS_RIGHT, 'right')}
         self.enemy_menu = enemy_menu()
 
     def action(self):
@@ -65,7 +64,7 @@ class battle_filed:
 
         for i in self.unit_list:
             # 判定碰撞
-            if i is not unit and i.pos[1] == pos[1] \
+            if i.flag != unit.flag and i.pos[1] == pos[1] \
                     and is_in_range(pos[0], pos[0] + rag, i.pos[0]):
                 return i, None
 
