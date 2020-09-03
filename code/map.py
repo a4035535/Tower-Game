@@ -82,7 +82,7 @@ class map:
                                         fight_wh[1] / 4))
                 # i.status = 4 + (i.status + 1) % 4
             pygame.draw.rect(screen, (255, 0, 0), (i.pos[0], i.pos[1], 50, 4), 0)
-            pygame.draw.rect(screen, (0, 255, 0), (i.pos[0], i.pos[1], 50 * (i.HP / 100), 4), 0)
+            pygame.draw.rect(screen, (0, 255, 0), (i.pos[0], i.pos[1], 50 * (i.HP / UNIT_MAX_HP[i.ID]), 4), 0)
 
         pygame.draw.rect(screen, (255, 0, 0), (40,200, 100, 6), 0)
         pygame.draw.rect(screen, (0, 255, 0), (41, 201, 98*(base_hp[0]/BASE_MAX_HP[0]), 4), 0)
