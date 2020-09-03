@@ -19,16 +19,12 @@ class battle_filed:
         self.enemy_menu = enemy_menu()
 
     def action(self):
-        game_statue = 'running'
         for i in self.unit_list:
             enemy, game_statue = self.check_collision(i)
-            if game_statue is not 'running':
-                break
             i.action(enemy)
 
         now_cd, max_cd = self.unit_menu.action()
         enemy_list = self.enemy_menu.action()
-
         for i in enemy_list:
             self.unit_list.append(i)
 
@@ -39,7 +35,7 @@ class battle_filed:
         for i in dead_list:
             self.unit_list.remove(i)
 
-        return self.unit_list, now_cd, max_cd, [self.base['left'].HP, self.base['right'].HP], game_statue
+        return self.unit_list, now_cd, max_cd
 
     def add_unit(self, no, row, flag):
         # row: 0 1 2 标记是哪三条路
@@ -71,7 +67,7 @@ class battle_filed:
                     and is_in_range(pos[0], pos[0] + rag, i.pos[0]):
                 return i, None
 
-        game_statue = 'running'
+        game_statue = None
         base_flag = 'left' if 'right' == unit.flag else 'right'
         # 与基地发生碰撞
         if is_in_range(pos[0], pos[0] + rag, self.base[base_flag].pos):

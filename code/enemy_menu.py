@@ -2,7 +2,7 @@ from unit_menu import unit_menu
 import random
 
 ROW_Y = [310, 410, 510]
-LEVEL =1
+LEVEL = 10
 
 
 class enemy_menu(unit_menu):
