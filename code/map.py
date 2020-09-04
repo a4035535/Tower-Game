@@ -77,12 +77,12 @@ class map:
         for i in army:
             if i.status < 4:
                 photo = left_move_image[i.ID][i.status]
-                if (i.flag == "right"):
+                if i.flag == "right":
                     photo = right_move_image[i.ID][i.status]
                 screen.blit(all_image[i.ID][0], i.pos, pygame.Rect(photo))
             else:
                 fight = left_fight_image[i.ID][i.status - 4]
-                if (i.flag == "right"):
+                if i.flag == "right":
                     fight = right_fight_image[i.ID][i.status - 4]
                 screen.blit(all_image[i.ID][1], i.pos, pygame.Rect(fight))
             pygame.draw.rect(screen, (255, 0, 0), (i.pos[0], i.pos[1], 50, 4), 0)
@@ -149,10 +149,10 @@ class map:
         screen.blit(road, pos_road3)
         screen.blit(base_left, pos_base1)
         screen.blit(base_right, pos_base2)
-        if (current_status == "left_win"):
+        if current_status == "left_win":
             screen.blit(left_win_img, (350, 150))
             self.over = 1
-        elif (current_status == "right_win"):
+        elif current_status == "right_win":
             screen.blit(right_win_img, (350, 150))
             self.over = 1
 
@@ -163,13 +163,13 @@ class map:
             downImagePos = head_image[1][i]
             button = Button(upImagePos, downImagePos, (60 * (i + 1), 50), screen, category, all_image[i][0])
             cd1 = pygame.draw.rect(screen, (0, 255, 0), (60 * (i + 1) + 25, 25, 6, 50), 0)
-            if (max_cd[i] - now_cd[i]):
+            if max_cd[i] - now_cd[i]:
                 cd2 = pygame.draw.rect(screen, (255, 0, 0),
                                        (60 * (i + 1) + 25, 25, 6, 50 * ((max_cd[i] - now_cd[i]) / max_cd[i])), 0)
             category = button.render()
-        if (category >= 0):
+        if category >= 0:
             mouse_image = all_image[category][0]
-            if (now_cd[category] == max_cd[category]):
+            if now_cd[category] == max_cd[category]:
                 self.mouse_move(mouse_image, head_image[0][category])
             game.isOnclick()
 
@@ -186,8 +186,10 @@ if __name__ == "__main__":
         unit_lists, now_cd, max_cd, base_hp, current_status = model.action()
 
         game.load_background(current_status)
+
         if game.over:
             break
+
         game.displaySoldiers(unit_lists, base_hp)
         game.load_menu(now_cd, max_cd)
         pygame.display.update()
